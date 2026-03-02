@@ -1,64 +1,64 @@
 #include <unistd.h>
 #include <stdio.h>
-
-// فحص هل كلمة المرور تحتوي على ثمانية احرف على الاقل
-int check_password(char password[]){
-  int length = 0;
-  while (password[length] != '\0'){
-  length++;
-  }  return length >= 8;
+//دالة التحقق اذا كان عدد الاحرف ثمانية او اكبر
+int check_password_length(char password[]){
+    int length = 0;
+    while(password[length] != '\0'){
+    length++;
+    
+}
+return length>=8;
 }
 
-
-//فحص هل كلمة المرور تحتوي على حرف ةاحد كبير على الاقل
-int check_uppercaracter(char password[]){
-    int carcter = 0;
+//دالة تفحص حرف كبير واحد على الاقل
+int check_upperletter(char password[]){
+    
+    int character = 0;
     int count = 0;
-    while (password[carcter] != '\0'){
-        count+= (password[carcter] >= 'A' && password[carcter] <= 'Z');
-        carcter++;
+    while(password[character] != '\0'){
+        count+=(password[character]>='A'&&password[character]<='Z');
+        character++;
+       
     }
-    return count > 0;
-}
-
-
-
-//فحص هل كلمة المرور تحتوي على حرف واحد صغير على الاقل
-int check_lowercaracter(char password[]){
-    int carcter = 0;
-    int count = 0;
-    while (password[carcter] != '\0'){
-        count+= (password[carcter] >= 'a' && password[carcter] <= 'z');
-        carcter++;
-    }
-    return count > 0;
-}
-
-
-
-//فحص هل كلمة المرور تحتوي على رقم واحد على الاقل
-  int check_number(char password[]){
-    int carcter = 0;
-    int count = 0;
-    while (password[carcter] != '\0'){
-        count+= (password[carcter] >= '0' && password[carcter] <= '9');
-        carcter++;
-    }
-    return count > 0;
+     return count>0;
   }
 
 
-  
-// الدالة الرئيسية (بداية الكود) 
-  int main() {
-    char my_password[] = "Abod123";
-    int result = (check_password(my_password) && check_uppercaracter(my_password) && check_lowercaracter(my_password ) && check_number(my_password));
-    
+//دالة تفحص حرف صغير واحد عبى الاقل
+int check_lowerletter(char password[]){
+    int character = 0;
+    int count = 0;
+    while(password[character] != '\0'){
+        count+=(password[character] >= 'a' && password[character]<= 'z');
+        character++;
+        
+    }
+    return count>0;
+    }
 
-    write(1, "Password is correct.\n", 19 * result);
-    write(1, "Password is incorrect.\n", 21 * (1 - result));
-    
-    return 0;
+
+//دالة تفحص رقم واحد على الاقل
+int check_digit(char password[]){
+    int character =0;
+    int count =0;
+    while(password[character] != '\0'){
+        count+=(password[character]>='0'&& password[character]<='9');
+        character++;
+       
+    }
+     return count>0;
 }
 
 
+//الدالة الرئيسية
+int main(){
+    char user_password[]= "Aboded1";
+    write(1,"need at least 8 character.\n",(sizeof("need at least 8 character.\n")-1)*(1-check_password_length(user_password)));
+    write(1, "need at least one uppercase letter.\n",(sizeof("need at least one uppercase letter.\n")-1)*(1-check_upperletter(user_password)));
+    write(1, "need at least one lowercase letter.\n",(sizeof("need at least one lowercase letter.\n")-1)*(1-check_lowerletter(user_password)));
+    write(1, "need at least one digit.\n",(sizeof("need at least one digit.\n")-1)*(1-check_digit(user_password)));
+    int result = (check_password_length(user_password)&&check_upperletter(user_password)&&check_lowerletter(user_password)&&check_digit(user_password));
+    write(1, "password is correct.\n",(sizeof("password is correct.\n")-1)*result);
+    write(1, "password is incorrect.\n",(sizeof("password is incorrect.\n")-1)*(1-result));
+    return 0;
+  }
